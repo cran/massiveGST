@@ -21,7 +21,7 @@
 
 \value{A data frame.}
 
-\references{Cerulo, Pagnotta (2021) \doi{10.1101/2021.02.15.431228}}
+\references{Cerulo, Pagnotta (2022) \doi{10.3390/e24050739}}
 
 \author{Stefano M. Pagnotta}
 

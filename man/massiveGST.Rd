@@ -30,7 +30,8 @@ massiveGST(gene_profile, gene_sets,
 \item{B.value}{Bonferroni adjustment of the p.values}
 \item{relevance}{marginal ordering of the table}
 }
-\references{Cerulo, Pagnotta (2021) \doi{10.1101/2021.02.15.431228}}
+\references{Cerulo, Pagnotta (2022) \doi{10.3390/e24050739}}
+
 \author{Stefano M. Pagnotta}
 
 \seealso{\link{summary.mGST}, \link{plot.mGST}, \link{cut_by_logit2NES}, \link{cut_by_NES}, \link{cut_by_significance}}
