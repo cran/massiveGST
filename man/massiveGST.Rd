@@ -12,23 +12,23 @@ massiveGST(gene_profile, gene_sets,
 }
 
 \arguments{
-  \item{gene_profile}{a named list of values; the names have to match the names fo genes in the gene-set.}
-  \item{gene_sets}{a character vector of gene-sets}
-  \item{cols_to_remove}{a list of colnames to eventually remove from the output}
+  \item{gene_profile}{a named list of values; the names have to match the names of genes in the gene-set.}
+  \item{gene_sets}{a character vector of gene-sets.}
+  \item{cols_to_remove}{a list of colnames to eventually remove from the output.}
   \item{alternative}{a character string specifying the alternative hypothesis of the MWW test;  must be one of "two.sided" (default), "greater" or "less".}
 }
 
 \value{A data frame with columns
-\item{size}{Original size of the gene-set}
-\item{actualSize}{Size of the gene-set after the match with the gene-profile}
+\item{size}{Original size of the gene-set.}
+\item{actualSize}{Size of the gene-set after the match with the gene-profile.}
 \item{NES}{(Normalized Enrichment Score) the strength of the association of the gene-set with the gene profile; also the percentile rank of the gene-set in the universe of the genes ouside the gene-set.}
-\item{odd}{odd transformation of the NES}
-\item{logit2NES}{logit transformation of the NES}
-\item{abs_logit2NES}{absolute value of the logit2NES in the case of "two.sided" alternative}
-\item{p.value}{p-values associated with the gene-set}
-\item{BH.value}{Benijamini and Hockberg adjustment of the p.values}
-\item{B.value}{Bonferroni adjustment of the p.values}
-\item{relevance}{marginal ordering of the table}
+\item{odd}{odd transformation of the NES.}
+\item{logit2NES}{logit transformation of the NES.}
+\item{abs_logit2NES}{absolute value of the logit2NES in the case of "two.sided" alternative.}
+\item{p.value}{p-values associated with the gene-set.}
+\item{BH.value}{Benijamini and Hockberg adjustment of the p.values.}
+\item{B.value}{Bonferroni adjustment of the p.values.}
+\item{relevance}{marginal ordering of the table.}
 }
 \references{Cerulo, Pagnotta (2022) \doi{10.3390/e24050739}}
 

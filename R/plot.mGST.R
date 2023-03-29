@@ -8,7 +8,7 @@ function(x, gene_sets = NULL, order_by = "logit2NES", top = 30,
   
   if(as.network) {
     if(is.null(gene_sets)) stop("The gene-sets collection is not provided.")
-    ans <- plot.network(x, gene_sets, eps = eps, similarity_threshold = similarity_threshold, manipulation = manipulation, autoResize = autoResize)
+    ans <- plot.network(x, gene_sets, eps = eps, similarity_threshold = similarity_threshold, manipulation = manipulation, autoResize = autoResize, ...)
     return(ans)
   }
   

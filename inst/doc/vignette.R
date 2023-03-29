@@ -125,6 +125,28 @@ save_as_xls(ans, file_name = fname)
 # Inspecting the network of gene-sets
 plot(ans, gene_sets = geneSets, as.network = TRUE)
 
+## ----massive OR-test, echo=TRUE-----------------------------------------------
+geneSets <- get_geneSets_from_msigdbr(category = "C5", subcategory = "CC", what = "gene_symbol")
+
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "pre_ranked_list.txt")
+geneProfile <- get_geneProfile(fname)
+
+## ---- echo=TRUE---------------------------------------------------------------
+geneList <- names(head(geneProfile, 500))
+
+## ---- echo=TRUE---------------------------------------------------------------
+ans <- massiveORT(geneList, geneSets)
+
+## ---- echo=TRUE---------------------------------------------------------------
+summary(cut_by_significance(ans), as.formattable = TRUE)
+
+## ---- echo=TRUE---------------------------------------------------------------
+plot(cut_by_significance(ans))
+
+## -----------------------------------------------------------------------------
+plot(cut_by_significance(ans), gene_sets = geneSets, as.network = TRUE)
+
 ## -----------------------------------------------------------------------------
 sessionInfo()
 

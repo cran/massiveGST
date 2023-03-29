@@ -14,9 +14,9 @@ function(gs, eps = 0.25) {
       }
 
   attr(ans, "Size") <- m
-  attr(ans, "Labels") <- colnames(gs)
+  attr(ans, "Labels") <- names(gs) # 20220921 EX attr(ans, "Labels") <- colnames(gs)
   attr(ans, "Diag") <- FALSE    
-  attr(ans, "method") <- "convex combination"
+  attr(ans, "method") <- "convex combination of similarities"
   class(ans) <- "dist"
   return(ans)
 }

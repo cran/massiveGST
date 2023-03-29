@@ -1,6 +1,6 @@
 bibentry(bibtype = "article",
     title = "massiveGST: A Mann-Whitney-Wilcoxon Gene-Set Test Tool That Gives Meaning to Gene-Set Enrichment Analysis",
-    author = personList(
+    author = c(
         person(given="Luigi", family="Cerulo"),
         person(given="Stefano M.", family="Pagnotta")
     ),

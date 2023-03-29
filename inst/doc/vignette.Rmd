@@ -1,5 +1,5 @@
 ---
-title: "massive GST (version 20220316)"
+title: "massive GST (version 20230328)"
 author: "[S.M. Pagnotta](https://www.researchgate.net/profile/Stefano-Pagnotta-2) - Dept. of Science and Technology, Universit&agrave; degli Studi del Sannio (Benevento, Italy)"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output:
@@ -235,6 +235,46 @@ save_as_xls(ans, file_name = fname)
 # Inspecting the network of gene-sets
 plot(ans, gene_sets = geneSets, as.network = TRUE)
 ```
+
+# Over-representation (Fisher's exact) test
+Since version 1.2, a new function has been add to implement the overepresentation test (Fisher's exact text) that is integrated with both the tabular and graphical function of this package. 
+
+Getting the gene sets and the gene-profile
+```{r massive OR-test, echo=TRUE}
+geneSets <- get_geneSets_from_msigdbr(category = "C5", subcategory = "CC", what = "gene_symbol")
+
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "pre_ranked_list.txt")
+geneProfile <- get_geneProfile(fname)
+```
+
+To mimic a set of significant genes coming from a differential expression procedure, we get the first 500 genes in the pre-ranked list,
+```{r, echo=TRUE}
+geneList <- names(head(geneProfile, 500))
+```
+
+and run the enrichment analysis
+```{r, echo=TRUE}
+ans <- massiveORT(geneList, geneSets)
+```
+The function massiveORT essentially is a wrapper to the function fisher.test in charge to 1) arrange the input to feed fisher.test in sequence for each gene set, 2) arrange the output in a data frame compatible with the other function of the package, and 3) compute the universe of genes for the analysis. 
+
+By default, the universe of genes necessary to the Fisher's test is computed as the collection of genes included at lest once in any gene-set. The function allows to consider a different universe. Se help file. 
+
+The tabular result comes from 
+```{r, echo=TRUE}
+summary(cut_by_significance(ans), as.formattable = TRUE)
+```
+
+The graphical output is from 
+```{r, echo=TRUE}
+plot(cut_by_significance(ans))
+```
+and
+```{r}
+plot(cut_by_significance(ans), gene_sets = geneSets, as.network = TRUE)
+```
+
 
 
 # Session info
