@@ -19,13 +19,15 @@ write_geneSets_to_gmt(gs, fileName)
 
 \author{Stefano M. Pagnotta}
 
-\seealso{\link{get_geneSets_from_msigdbr}, \link{get_geneSets_from_local_files}}
+\seealso{\link{get_geneSets_from_local_files}}
 
 \examples{
 library(massiveGST)
 
 # get the gene-sets
-geneSets <- get_geneSets_from_msigdbr(category = "H", what = "gene_symbol")
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+geneSets <- get_geneSets_from_local_files(fname)
 
 # save the gene-sets
 fname <- file.path(tempdir(), "hallmarks.gmt")

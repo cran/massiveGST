@@ -34,7 +34,7 @@ massiveGST(gene_profile, gene_sets,
 
 \author{Stefano M. Pagnotta}
 
-\seealso{\link{summary.mGST}, \link{plot.mGST}, \link{cut_by_logit2NES}, \link{cut_by_NES}, \link{cut_by_significance}}
+\seealso{\link{summary.mGST}, \link{plot.mGST}, \link{cut_by_logit2NES}, \link{cut_by_NES}, \link{cut_by_significance}, \link{hallmark gene sets}}
 \examples{
 library(massiveGST)
 
@@ -44,7 +44,9 @@ fname <- file.path(fname, "pre_ranked_list.txt")
 geneProfile <- get_geneProfile(fname)
 
 # get the gene-sets
-geneSets <- get_geneSets_from_msigdbr(category = "H", what = "gene_symbol")
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+geneSets <- get_geneSets_from_local_files(fname)
 
 # run the function
 ans <- massiveGST(geneProfile, geneSets, alternative = "two.sided")

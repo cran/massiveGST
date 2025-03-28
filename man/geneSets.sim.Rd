@@ -19,7 +19,9 @@
 library(massiveGST)
 
 # get the gene-sets
-geneSets <- get_geneSets_from_msigdbr(category = "H", what = "gene_symbol")[1:5]
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+geneSets <- get_geneSets_from_local_files(fname)[1:5]
 
 # compute the similarities
 geneSets.sim(geneSets)

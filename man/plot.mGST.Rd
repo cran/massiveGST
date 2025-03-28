@@ -26,8 +26,8 @@
   \item{as.network}{a logical value to switch to a network display; as.network = FALSE (default)}
   \item{similarity_threshold}{a real value to cut the similarities between gene-stes below this value; similarity_threshold = 1/3 (default)}
   \item{eps}{a real value between 0.0 and 1.0 controlling the contribution of the Jaccard and overlap similaties to their convex combination; eps = 0.25 (default), see details.}
-  \item{manipulation}{a logical value allowing to manipulate the network; manipulation = FALSE (default); see \link{visOptions}}
-  \item{autoResize}{a logical value allowing to resize the network; resize = TRUE (default); see \link{visOptions}}
+  \item{manipulation}{a logical value allowing to manipulate the network; manipulation = FALSE (default) \link[visNetwork:visOptions]{visNetwork::visOptions()}}
+  \item{autoResize}{a logical value allowing to resize the network; resize = TRUE (default) \link[visNetwork:visOptions]{visNetwork::visOptions()}}
   \item{\dots}{other graphical parameters}
 }
 \details{This function display the results of enrichment analysis both as a bar-plot and a network.
@@ -42,7 +42,7 @@ The similarity between the gene-set is computed a convex combination of the Jacc
 
 \author{Stefano M. Pagnotta}
 
-\seealso{\link{massiveGST}, \link{visNetwork}, \link{visOptions}
+\seealso{\link{massiveGST}, \link[visNetwork:visNetwork]{visNetwork::visNetwork()}, \link[visNetwork:visOptions]{visNetwork::visOptions()}, \link{hallmark gene sets}
 }
 
 \examples{
@@ -54,15 +54,17 @@ fname <- file.path(fname, "pre_ranked_list.txt")
 geneProfile <- get_geneProfile(fname)
 
 # get the gene-sets
-geneSets <- get_geneSets_from_msigdbr(category = "H", what = "gene_symbol")
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+geneSets <- get_geneSets_from_local_files(fname)
 
 # run the function
 ans <- massiveGST(geneProfile, geneSets, alternative = "two.sided")
 
 # to get the bar-plot
-plot(cut_by_significance(ans, level_of_significance = 0.01))
+plot(cut_by_significance(ans, level_of_significance = 0.1))
 
 # to get the network of the gene-sets
-plot(cut_by_significance(ans, level_of_significance = 0.01), 
+plot(cut_by_significance(ans, level_of_significance = 0.1), 
      gene_sets = geneSets, as.network = TRUE)
 }

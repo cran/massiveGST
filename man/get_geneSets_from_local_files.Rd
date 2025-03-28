@@ -16,25 +16,19 @@
 
 \author{Stefano M. Pagnotta}
 
-\seealso{\link{get_geneSets_from_msigdbr}, \link{write_geneSets_to_gmt}
+\seealso{\link{write_geneSets_to_gmt}
 }
 
 \examples{library(massiveGST)
 
-tmp <- get_geneSets_from_msigdbr(category = "H", what = "gene_symbol")
-
-fname1 <- file.path(tempdir(), "h1.gmt")
-write_geneSets_to_gmt(tmp, fileName = fname1)
-
-fname2 <- file.path(tempdir(), "h2.gmt")
-write_geneSets_to_gmt(tmp, fileName = fname2)
-
 # getting one collection
-geneSets <- get_geneSets_from_local_files(fname1)
-length(geneSets)
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+length(geneSets <- get_geneSets_from_local_files(fname))
+head(geneSets)
 
-# getting two collections
-geneSets <- get_geneSets_from_local_files(c(fname1, fname2))
+# getting two or more collections
+geneSets <- get_geneSets_from_local_files(c(fname, fname))
 length(geneSets)
 
 }

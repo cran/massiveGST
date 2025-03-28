@@ -29,7 +29,7 @@
 
 \author{Stefano M. Pagnotta}
 
-\seealso{\link{fisher.test}, \link{cut_by_significance}}
+\seealso{\link{fisher.test}, \link{cut_by_significance}, \link{hallmark gene sets}}
 
 \examples{
 library(massiveGST)
@@ -41,12 +41,13 @@ geneProfile <- get_geneProfile(fname)
 geneList <- names(head(geneProfile, 1000))
 
 # get the gene-sets
-geneSets <- get_geneSets_from_msigdbr(category = "C5", subcategory = "CC", what = "gene_symbol")
-geneSets <- geneSets[1:250]
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+geneSets <- get_geneSets_from_local_files(fname)
 
 # run the function
 ans <- massiveORT(geneList, geneSets)
 cut_by_significance(ans)
 
-plot(cut_by_significance(ans), geneSets,as.network = TRUE)
+plot(ans, geneSets, as.network = TRUE)
 }

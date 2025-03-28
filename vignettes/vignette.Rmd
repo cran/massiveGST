@@ -1,5 +1,5 @@
 ---
-title: "massive GST (version 20230328)"
+title: "massive GST (version 20250326)"
 author: "[S.M. Pagnotta](https://www.researchgate.net/profile/Stefano-Pagnotta-2) - Dept. of Science and Technology, Universit&agrave; degli Studi del Sannio (Benevento, Italy)"
 date: "`r format(Sys.Date(), '%m/%d/%Y')`"
 output:
@@ -58,7 +58,9 @@ tail(geneProfile)
 This example extracts gene-sets where the gene-names are the gene symbols. Other possibilities have been specified in the 'man' fo the functions, and essentially they are the names of the columns of the data frame retrieved by the msigdbr function. 
 
 ```{r}
-geneSets <- get_geneSets_from_msigdbr(category = "H", what = "gene_symbol")
+fname <- system.file("extdata", package="massiveGST")
+fname <- file.path(fname, "h.all.v2024.1.Hs.symbols.gmt")
+geneSets <- get_geneSets_from_local_files(fname)
 class(geneSets)
 head(names(geneSets))
 ```
@@ -190,62 +192,16 @@ The similarity $S(A, B)$ between two gene-sets $A$ and $B$ comes from the convex
 \[S(A,B)= \epsilon \cdot \delta_1(A, B)+ (1-\epsilon)\cdot \delta_0(A, B),\]
 with $0\leq \epsilon \leq 1$, and $\delta_0$ is the Jaccard similarity, while $\delta_1$ is the overlap index. $logit2NES$ controls the color of the balls: red for those with positive values (associated with the treatment), green otherwise. $actualSize$ controls the dimension of the balls.
 
-
-# A more intensive analysis: playing with more than 10,000 gene-sets
-Here, we show a more serious analysis. A larger collection of gene-sets have be considered. 
-
-The nature of the gene profile included in the package is strictly according to the treatment versus control logic. In this case, 9 fusion FGFR3-TACC3 positive samples have been compared to 535 other samples. The interest is in the treatment, and then the analysis requires the alternative hypothesis "greater". 
-```{r, eval = TRUE}
-system.time({C5BP_gs <- get_geneSets_from_msigdbr(category = "C5", 
-                                                  subcategory = "BP", 
-                                                  what = "gene_symbol")})
-
-system.time({C5MF_gs <- get_geneSets_from_msigdbr(category = "C5", 
-                                                  subcategory = "MF", 
-                                                  what = "gene_symbol")})
-
-
-system.time({C5CC_gs <- get_geneSets_from_msigdbr(category = "C5", 
-                                                  subcategory = "CC", 
-                                                  what = "gene_symbol")})
-
-system.time({H_gs <- get_geneSets_from_msigdbr(category = "H", 
-                                               what = "gene_symbol")})
-
-# merging gene-sets collections
-geneSets <- c(C5MF_gs, C5CC_gs, C5BP_gs, H_gs)
-length(geneSets)
-
-# running the analysis
-system.time({ans <- massiveGST(geneProfile, geneSets, 
-                               alternative = "greater")})
-
-# removing non significant results
-ans <- cut_by_significance(ans, 
-                           level_of_significance = 0.05, 
-                           where = "bonferroni")
-
-# Tabular results
-summary(ans, as.formattable = TRUE, cols_to_remove = "BH.value")
-
-# Saving the table
-fname <- file.path(tempdir(), "massiveGST_results.tsv")
-save_as_xls(ans, file_name = fname)
-
-# Inspecting the network of gene-sets
-plot(ans, gene_sets = geneSets, as.network = TRUE)
-```
-
 # Over-representation (Fisher's exact) test
 Since version 1.2, a new function has been add to implement the overepresentation test (Fisher's exact text) that is integrated with both the tabular and graphical function of this package. 
 
 Getting the gene sets and the gene-profile
 ```{r massive OR-test, echo=TRUE}
-geneSets <- get_geneSets_from_msigdbr(category = "C5", subcategory = "CC", what = "gene_symbol")
+#geneSets <- get_geneSets_from_msigdbr(category = "C5", subcategory = "CC", what = "gene_symbol")
 
-fname <- system.file("extdata", package="massiveGST")
-fname <- file.path(fname, "pre_ranked_list.txt")
-geneProfile <- get_geneProfile(fname)
+#fname <- system.file("extdata", package="massiveGST")
+#fname <- file.path(fname, "pre_ranked_list.txt")
+#geneProfile <- get_geneProfile(fname)
 ```
 
 To mimic a set of significant genes coming from a differential expression procedure, we get the first 500 genes in the pre-ranked list,
@@ -272,7 +228,7 @@ plot(cut_by_significance(ans))
 ```
 and
 ```{r}
-plot(cut_by_significance(ans), gene_sets = geneSets, as.network = TRUE)
+plot(ans, gene_sets = geneSets, as.network = TRUE)
 ```
 
 
